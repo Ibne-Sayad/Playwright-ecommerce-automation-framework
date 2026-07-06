@@ -1,0 +1,16 @@
+{
+  "name": "playwright-automation-portfolio",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Playwright + TypeScript E2E automation framework for automationexercise.com",
+  "scripts": {
+    "test": "playwright test",
+    "test:headed": "playwright test --headed",
+    "report": "playwright show-report"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.54.2",
+    "@types/node": "^22.10.1",
+    "typescript": "^5.7.3"
+  }
+}

@@ -10,10 +10,12 @@
     "test:regression": "playwright test --grep @regression",
     "test:sanity": "playwright test --grep @sanity",
     "test:visual": "playwright test tests/visual",
+    "test:a11y": "playwright test tests/accessibility",
     "typecheck": "tsc --noEmit",
     "report": "playwright show-report"
   },
   "devDependencies": {
+    "@axe-core/playwright": "^4.12.1",
     "@playwright/test": "^1.54.2",
     "@types/node": "^22.10.1",
     "typescript": "^5.7.3"

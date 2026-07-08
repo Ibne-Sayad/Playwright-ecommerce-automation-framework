@@ -22,6 +22,7 @@ https://automationexercise.com
 - Configurable Chromium, Firefox, WebKit, and mobile Chrome projects
 - Tagged test execution with `@smoke`, `@regression`, and `@sanity`
 - Reusable Playwright fixtures for page objects
+- Accessibility checks with axe-core
 - Data-driven support for reusable test credentials
 - Dynamic user generation for registration flows
 - Centralized constants and project configuration
@@ -128,6 +129,14 @@ npm run test:visual
 ```
 
 Visual tests use Playwright screenshot assertions against stable page components instead of full-page screenshots. This keeps baselines focused and reduces noise from dynamic ads, overlays, and third-party content.
+
+Run accessibility checks:
+
+```bash
+npm run test:a11y
+```
+
+Accessibility tests use `@axe-core/playwright` to scan key pages. The suite records violation details as JSON attachments and fails only on critical violations so known demo-site issues can be reviewed without making the test suite permanently unusable.
 
 Run TypeScript validation:
 

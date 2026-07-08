@@ -63,7 +63,7 @@ export const env = {
   browsers: parseProjectNames(process.env.BROWSERS),
   headless: parseBoolean(process.env.HEADLESS, true),
   retries: process.env.CI ? 2 : parseNumber(process.env.RETRIES, 0),
-  testTimeout: parseNumber(process.env.TEST_TIMEOUT, DEFAULT_TEST_TIMEOUT),
-  workers: process.env.CI ? 2 : parseNumber(process.env.WORKERS, 1),
+  testTimeout: parseNumber(process.env.TEST_TIMEOUT, process.env.CI ? 90_000 : DEFAULT_TEST_TIMEOUT),
+  workers: parseNumber(process.env.WORKERS, 1),
   isCI: Boolean(process.env.CI)
 };

@@ -6,8 +6,8 @@ import { LoginPage } from '../pages/LoginPage';
 import users from '../test-data/users.json';
 import { generateUserData } from '../utils/testDataGenerator';
 
-test.describe('Authentication flow', () => {
-  test('loads the home page successfully', async ({ page }) => {
+test.describe('Authentication flow @regression', () => {
+  test('loads the home page successfully @smoke @sanity', async ({ page }) => {
     const homePage = new HomePage(page);
     await neutralizeAds(page);
     await homePage.goto();
@@ -15,7 +15,7 @@ test.describe('Authentication flow', () => {
     await expect(page).toHaveURL(/automationexercise\.com\/$/);
   });
 
-  test('registers a new user with generated test data', async ({ page }) => {
+  test('registers a new user with generated test data @regression', async ({ page }) => {
     const homePage = new HomePage(page);
     const loginPage = new LoginPage(page);
     const user = generateUserData();
@@ -28,7 +28,7 @@ test.describe('Authentication flow', () => {
     await expect(page.getByText('Enter Account Information')).toBeVisible();
   });
 
-  test('logs in with valid credentials', async ({ page }) => {
+  test('logs in with valid credentials @smoke @regression', async ({ page }) => {
     const homePage = new HomePage(page);
     const loginPage = new LoginPage(page);
     const user = generateUserData();
@@ -47,7 +47,7 @@ test.describe('Authentication flow', () => {
     await expect(page.locator('a[href="/logout"]')).toBeVisible();
   });
 
-  test('shows an error for invalid credentials', async ({ page }) => {
+  test('shows an error for invalid credentials @sanity @regression', async ({ page }) => {
     const homePage = new HomePage(page);
     const loginPage = new LoginPage(page);
 

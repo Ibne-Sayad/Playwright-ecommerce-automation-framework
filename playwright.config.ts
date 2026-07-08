@@ -1,29 +1,27 @@
-import { defineConfig, devices } from '@playwright/test';
+import { defineConfig } from '@playwright/test';
+import { DEFAULT_VIEWPORT, STORAGE_STATE_PATH } from './config/constants';
+import { env } from './config/environment';
+import { buildProjects } from './config/projects';
 
 export default defineConfig({
   globalSetup: './global-setup.js',
   testDir: './tests',
-  timeout: 60_000,
+  timeout: env.testTimeout,
   fullyParallel: false,
-  forbidOnly: !!process.env.CI,
-  retries: process.env.CI ? 2 : 0,
-  workers: process.env.CI ? 2 : 1,
+  forbidOnly: env.isCI,
+  retries: env.retries,
+  workers: env.workers,
   reporter: [['list'], ['html', { open: 'never' }]],
   use: {
-    baseURL: 'https://automationexercise.com',
+    baseURL: env.baseURL,
     // reuse storage state saved by global setup to bypass consent dialog
-    storageState: 'storageState.json',
-    headless: true,
-    viewport: { width: 1440, height: 900 },
+    storageState: STORAGE_STATE_PATH,
+    headless: env.headless,
+    viewport: DEFAULT_VIEWPORT,
     ignoreHTTPSErrors: true,
     screenshot: 'only-on-failure',
     trace: 'retain-on-failure',
     video: 'retain-on-failure'
   },
-  projects: [
-    {
-      name: 'chromium',
-      use: { ...devices['Desktop Chrome'] }
-    }
-  ]
+  projects: buildProjects(env.browsers)
 });

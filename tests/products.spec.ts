@@ -4,8 +4,8 @@ import { HomePage } from '../pages/HomePage';
 import { neutralizeAds } from '../utils/neutralize-ads';
 import { ProductsPage } from '../pages/ProductsPage';
 
-test.describe('Product catalog', () => {
-  test('searches for a product', async ({ page }) => {
+test.describe('Product catalog @regression', () => {
+  test('searches for a product @smoke @sanity', async ({ page }) => {
     const homePage = new HomePage(page);
     const productsPage = new ProductsPage(page);
 
@@ -17,7 +17,7 @@ test.describe('Product catalog', () => {
     await expect(productsPage.productCards).toHaveCount(1);
   });
 
-  test('opens product details from the catalog', async ({ page }) => {
+  test('opens product details from the catalog @regression', async ({ page }) => {
     const homePage = new HomePage(page);
     const productsPage = new ProductsPage(page);
 

@@ -4,8 +4,8 @@ import { HomePage } from '../pages/HomePage';
 import { neutralizeAds } from '../utils/neutralize-ads';
 import { ContactPage } from '../pages/ContactPage';
 
-test.describe('Contact us', () => {
-  test('submits the contact form successfully', async ({ page }) => {
+test.describe('Contact us @regression', () => {
+  test('submits the contact form successfully @sanity', async ({ page }) => {
     const homePage = new HomePage(page);
     const contactPage = new ContactPage(page);
 

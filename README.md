@@ -18,8 +18,14 @@ https://automationexercise.com
 ## Key Features
 
 - Page Object Model structure for maintainable test code
+- Environment-based configuration with `.env` support
+- Configurable Chromium, Firefox, WebKit, and mobile Chrome projects
+- Tagged test execution with `@smoke`, `@regression`, and `@sanity`
+- Reusable Playwright fixtures for page objects
 - Data-driven support for reusable test credentials
 - Dynamic user generation for registration flows
+- Centralized constants and project configuration
+- Lightweight logging utility
 - Centralized overlay and ad handling for improved test stability
 - Screenshots, traces, and videos retained on failure
 - HTML test reports for local review
@@ -42,10 +48,13 @@ https://automationexercise.com
 ```text
 .
 |-- .github/workflows/      # GitHub Actions workflow
+|-- config/                 # Environment, constants, and project config
+|-- fixtures/               # Reusable Playwright fixtures
 |-- pages/                  # Page Object Model classes
 |-- test-data/              # JSON test data
 |-- tests/                  # Playwright test specifications
 |-- utils/                  # Shared helpers and stability utilities
+|-- .env.example            # Sample local environment configuration
 |-- global-setup.js         # Browser storage and consent setup
 |-- playwright.config.ts    # Playwright configuration
 |-- package.json            # Scripts and dependencies
@@ -66,6 +75,24 @@ Install the Chromium browser used by the test project:
 npx playwright install chromium
 ```
 
+For full cross-browser execution, install all configured browsers:
+
+```bash
+npx playwright install chromium firefox webkit
+```
+
+Optional local environment setup:
+
+```bash
+cp .env.example .env
+```
+
+The default configuration runs Chromium. To opt into additional projects, set `BROWSERS` in `.env`:
+
+```text
+BROWSERS=chromium,firefox,webkit,mobile-chrome
+```
+
 ## Running Tests
 
 Run the full test suite:
@@ -84,6 +111,28 @@ Run Playwright directly:
 
 ```bash
 npx playwright test
+```
+
+Run tagged suites:
+
+```bash
+npm run test:smoke
+npm run test:sanity
+npm run test:regression
+```
+
+Run visual regression checks:
+
+```bash
+npm run test:visual
+```
+
+Visual tests use Playwright screenshot assertions against stable page components instead of full-page screenshots. This keeps baselines focused and reduces noise from dynamic ads, overlays, and third-party content.
+
+Run TypeScript validation:
+
+```bash
+npm run typecheck
 ```
 
 ## HTML Report

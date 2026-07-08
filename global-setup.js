@@ -1,11 +1,12 @@
 const { chromium } = require('@playwright/test');
 
 module.exports = async () => {
+  const baseURL = process.env.BASE_URL || 'https://automationexercise.com';
   const browser = await chromium.launch();
   const context = await browser.newContext();
   const page = await context.newPage();
   try {
-    await page.goto('https://automationexercise.com', { waitUntil: 'domcontentloaded', timeout: 60000 });
+    await page.goto(baseURL, { waitUntil: 'domcontentloaded', timeout: 60000 });
     await page.waitForTimeout(1500);
 
     // Try clicking visible consent buttons

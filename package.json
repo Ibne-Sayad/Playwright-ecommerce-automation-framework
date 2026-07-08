@@ -4,11 +4,12 @@
   "private": true,
   "description": "Playwright + TypeScript E2E automation framework for automationexercise.com",
   "scripts": {
-    "test": "playwright test",
+    "test": "playwright test --grep-invert @visual",
     "test:headed": "playwright test --headed",
     "test:smoke": "playwright test --grep @smoke",
     "test:regression": "playwright test --grep @regression",
     "test:sanity": "playwright test --grep @sanity",
+    "test:all": "playwright test",
     "test:visual": "playwright test tests/visual",
     "test:a11y": "playwright test tests/accessibility",
     "typecheck": "tsc --noEmit",

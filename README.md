@@ -96,11 +96,13 @@ BROWSERS=chromium,firefox,webkit,mobile-chrome
 
 ## Running Tests
 
-Run the full test suite:
+Run the default CI-safe test suite:
 
 ```bash
 npm test
 ```
+
+This excludes visual snapshot tests because screenshot baselines are platform-specific.
 
 Run tests in headed mode:
 
@@ -112,6 +114,12 @@ Run Playwright directly:
 
 ```bash
 npx playwright test
+```
+
+Run every test, including visual snapshots:
+
+```bash
+npm run test:all
 ```
 
 Run tagged suites:
@@ -128,7 +136,7 @@ Run visual regression checks:
 npm run test:visual
 ```
 
-Visual tests use Playwright screenshot assertions against stable page components instead of full-page screenshots. This keeps baselines focused and reduces noise from dynamic ads, overlays, and third-party content.
+Visual tests use Playwright screenshot assertions against stable page components instead of full-page screenshots. This keeps baselines focused and reduces noise from dynamic ads, overlays, and third-party content. Visual snapshots are run separately from the default CI job because Playwright screenshot baselines are OS-specific.
 
 Run accessibility checks:
 
@@ -156,7 +164,7 @@ npm run report
 
 The project includes a GitHub Actions workflow at `.github/workflows/playwright.yml`.
 
-The workflow runs on pull requests and pushes to `main` or `master`, installs dependencies, installs Playwright browsers, executes the test suite, and uploads the Playwright report when a failure occurs.
+The workflow runs on pull requests and pushes to `main` or `master`, installs dependencies, installs Playwright browsers, executes the default CI-safe test suite, and uploads the Playwright report when a failure occurs.
 
 ## Failure Artifacts
 

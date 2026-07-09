@@ -19,7 +19,7 @@ export class HomePage {
   }
 
   async goto() {
-    await this.page.goto('/');
+    await this.page.goto('/', { waitUntil: 'domcontentloaded' });
     await this.dismissConsentBanner();
   }
 
@@ -40,22 +40,22 @@ export class HomePage {
   async openProducts() {
     await this.dismissConsentBanner();
     await this.productsLink.waitFor({ state: 'visible' });
-    await this.productsLink.click();
+    await this.productsLink.click({ noWaitAfter: true });
     await this.page.waitForURL(/\/products/, { timeout: 10_000 }).catch(async () => {
-      await this.page.goto('/products');
+      await this.page.goto('/products', { waitUntil: 'domcontentloaded' });
     });
     await this.dismissConsentBanner();
   }
 
   async openCart() {
     await this.dismissConsentBanner();
-    await this.cartLink.click();
+    await this.cartLink.click({ noWaitAfter: true });
   }
 
   async openContact() {
     await this.dismissConsentBanner();
     await this.contactLink.waitFor({ state: 'visible' });
-    await this.contactLink.click();
+    await this.contactLink.click({ noWaitAfter: true });
   }
 
   async expectLoaded() {

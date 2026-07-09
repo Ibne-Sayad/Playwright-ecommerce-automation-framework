@@ -45,7 +45,7 @@ export class ProductsPage {
     }
     await this.page.waitForURL(/\/product_details\/\d+/, { timeout: 10_000 }).catch(async () => {
       if (!href) throw new Error('Product details link is missing href');
-      await this.page.goto(href);
+      await this.page.goto(href, { waitUntil: 'domcontentloaded' });
     });
   }
 

@@ -1,5 +1,16 @@
 import { Page } from '@playwright/test';
 
+const blockedResourcePatterns = [
+  /googlesyndication/i,
+  /googleadservices/i,
+  /doubleclick/i,
+  /adservice/i,
+  /adsystem/i,
+  /google-analytics/i,
+  /googletagmanager/i,
+  /pagead/i
+];
+
 export function neutralizeAdsScript() {
   const selectors = [
     '.fc-dialog-overlay',
@@ -68,6 +79,20 @@ export function neutralizeAdsScript() {
   });
 
   observer.observe(document.documentElement, { childList: true, subtree: true });
+}
+
+export async function blockNonEssentialResources(page: Page) {
+  await page.route('**/*', async (route) => {
+    const request = route.request();
+    const url = request.url();
+
+    if (blockedResourcePatterns.some((pattern) => pattern.test(url))) {
+      await route.abort();
+      return;
+    }
+
+    await route.continue();
+  });
 }
 
 export async function neutralizeAds(page: Page) {

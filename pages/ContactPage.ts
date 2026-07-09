@@ -26,18 +26,15 @@ export class ContactPage {
     await this.emailInput.fill(email);
     await this.subjectInput.fill(subject);
     await this.messageInput.fill(message);
-    await this.page.evaluate(() => {
-      document.querySelectorAll('.fc-dialog-overlay, .fc-consent-root').forEach(el => el.remove());
-    });
+    await neutralizeAds(this.page);
     this.page.once('dialog', async (dialog) => {
       await dialog.accept();
     });
-    await this.submitButton.click({ force: true });
-    // wait for success message to populate (allow for redirect or async update)
-    try {
-      await this.successMessage.waitFor({ state: 'visible', timeout: 10000 });
-    } catch (e) {
-      // ignore - test will assert later; this gives buffer time
-    }
+    await this.submitButton.click({ force: true, noWaitAfter: true });
+    await this.page.waitForFunction(
+      () => document.querySelector('div.status.alert-success')?.textContent?.includes('Success! Your details have been submitted successfully.'),
+      undefined,
+      { timeout: 10_000 }
+    );
   }
 }

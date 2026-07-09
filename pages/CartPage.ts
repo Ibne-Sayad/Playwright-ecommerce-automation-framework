@@ -1,4 +1,5 @@
 import { Page, Locator } from '@playwright/test';
+import { neutralizeAds } from '../utils/neutralize-ads';
 
 export class CartPage {
   readonly page: Page;
@@ -14,6 +15,7 @@ export class CartPage {
   }
 
   async removeFirstItem() {
-    await this.removeButton.click();
+    await neutralizeAds(this.page);
+    await this.removeButton.click({ force: true });
   }
 }

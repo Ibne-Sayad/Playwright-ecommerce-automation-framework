@@ -1,4 +1,5 @@
 import { Page, Locator } from '@playwright/test';
+import { neutralizeAds } from '../utils/neutralize-ads';
 
 export class LoginPage {
   readonly page: Page;
@@ -22,15 +23,14 @@ export class LoginPage {
   }
 
   async register(name: string, email: string) {
+    await neutralizeAds(this.page);
     await this.signupNameInput.fill(name);
     await this.signupEmailInput.fill(email);
-    await this.signupButton.click();
+    await this.signupButton.click({ noWaitAfter: true });
   }
 
   async completeSignup(password: string) {
-    await this.page.evaluate(() => {
-      document.querySelectorAll('[id*="cookie"], [class*="cookie"], [class*="consent"], [class*="fc-"], #onetrust-banner-sdk, .qc-cmp2-container, .fc-dialog-overlay, .fc-consent-root').forEach((el) => el.remove());
-    }).catch(() => undefined);
+    await neutralizeAds(this.page);
     await this.page.locator('input#id_gender1').check({ force: true });
     await this.page.locator('input#password').fill(password);
     await this.page.locator('#days').selectOption('1');
@@ -48,12 +48,15 @@ export class LoginPage {
     await this.page.locator('input#city').fill('City');
     await this.page.locator('input#zipcode').fill('12345');
     await this.page.locator('input#mobile_number').fill('1234567890');
-    await this.page.locator('button[data-qa="create-account"]').click({ force: true });
+    await neutralizeAds(this.page);
+    await this.page.locator('button[data-qa="create-account"]').click({ force: true, noWaitAfter: true });
+    await this.page.getByText('Account Created!').waitFor({ state: 'visible', timeout: 15_000 });
   }
 
   async login(email: string, password: string) {
+    await neutralizeAds(this.page);
     await this.loginEmailInput.fill(email);
     await this.loginPasswordInput.fill(password);
-    await this.loginButton.click();
+    await this.loginButton.click({ noWaitAfter: true });
   }
 }

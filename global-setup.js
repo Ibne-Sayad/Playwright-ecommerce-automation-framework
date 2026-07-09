@@ -6,6 +6,15 @@ module.exports = async () => {
   const context = await browser.newContext();
   const page = await context.newPage();
   try {
+    await page.route('**/*', async (route) => {
+      const url = route.request().url();
+      if (/googlesyndication|googleadservices|doubleclick|adservice|adsystem|google-analytics|googletagmanager|pagead/i.test(url)) {
+        await route.abort();
+        return;
+      }
+      await route.continue();
+    });
+
     await page.goto(baseURL, { waitUntil: 'domcontentloaded', timeout: 60000 });
     await page.waitForTimeout(1500);
 

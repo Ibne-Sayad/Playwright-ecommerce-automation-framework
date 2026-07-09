@@ -12,6 +12,7 @@
     "test:all": "playwright test",
     "test:visual": "playwright test tests/visual",
     "test:a11y": "playwright test tests/accessibility",
+    "test:api": "playwright test tests/api",
     "typecheck": "tsc --noEmit",
     "report": "playwright show-report"
   },

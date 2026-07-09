@@ -49,6 +49,7 @@ https://automationexercise.com
 ```text
 .
 |-- .github/workflows/      # GitHub Actions workflow
+|-- api/                    # Reusable API clients
 |-- config/                 # Environment, constants, and project config
 |-- fixtures/               # Reusable Playwright fixtures
 |-- pages/                  # Page Object Model classes
@@ -145,6 +146,19 @@ npm run test:a11y
 ```
 
 Accessibility tests use `@axe-core/playwright` to scan key pages. The suite records violation details as JSON attachments and fails only on critical violations so known demo-site issues can be reviewed without making the test suite permanently unusable.
+
+Run API checks:
+
+```bash
+npm run test:api
+```
+
+API tests use Playwright request context through `api/automationExerciseClient.ts`. Covered endpoints:
+
+- `GET /api/productsList`
+- `POST /api/searchProduct`
+
+The checks validate HTTP status, API `responseCode`, response body shape, product collection contents, and expected product fields such as `id`, `name`, `price`, `brand`, and `category`.
 
 Run TypeScript validation:
 
